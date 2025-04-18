@@ -17,12 +17,13 @@ addBtn.addEventListener('click', () => {
   input.value = "";
   prioritySelect.value = 'low';
   saveTasks();
+  updateCounters();
 });
 
 function addTask(text, done = false, priority = 'low') {
   const li = document.createElement('li');
   if (done) li.classList.add('done');
-  li.classList.add(`priority-${priority}`); // ← clase para darle color según prioridad
+  li.classList.add(`priority-${priority}`);
 
   const spanText = document.createElement('span');
   spanText.textContent = text;
@@ -34,6 +35,7 @@ function addTask(text, done = false, priority = 'low') {
     e.stopPropagation();
     li.remove();
     saveTasks();
+    updateCounters();
   };
 
   li.ondblclick = () => {
@@ -51,9 +53,11 @@ function addTask(text, done = false, priority = 'low') {
         spanText.textContent = newText;
         li.replaceChild(spanText, inputEdit);
         saveTasks();
+        updateCounters();
       } else {
         li.remove();
         saveTasks();
+        updateCounters();
       }
     };
 
@@ -66,10 +70,12 @@ function addTask(text, done = false, priority = 'low') {
   li.onclick = () => {
     li.classList.toggle('done');
     saveTasks();
+    updateCounters();
   };
 
   li.appendChild(delBtn);
   taskList.appendChild(li);
+  updateCounters();
 }
 
 function saveTasks() {
@@ -91,6 +97,7 @@ function saveTasks() {
 function loadTasks() {
   const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
   tasks.forEach(task => addTask(task.text, task.done, task.priority));
+  updateCounters();
 }
 
 searchInput.addEventListener('input', () => {
@@ -106,13 +113,21 @@ searchInput.addEventListener('input', () => {
 filterSelect.addEventListener('change', () => {
   const selected = filterSelect.value;
   const tasks = taskList.querySelectorAll('li');
+
   tasks.forEach(li => {
     const hasClass = li.classList.contains(`priority-${selected}`);
-    if (selected === 'all' || hasClass) {
-      li.style.display = 'flex';
-    } else {
-      li.style.display = 'none';
-
-    }
+    li.style.display = (selected === 'all' || hasClass) ? 'flex' : 'none';
   });
 });
+
+// ✅ Nueva función: actualizar contadores
+function updateCounters() {
+  const tasks = taskList.querySelectorAll('li');
+  const total = tasks.length;
+  const done = [...tasks].filter(li => li.classList.contains('done')).length;
+  const pending = total - done;
+
+  document.getElementById('totalCount').textContent = total;
+  document.getElementById('doneCount').textContent = done;
+  document.getElementById('pendingCount').textContent = pending;
+}

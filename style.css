@@ -86,4 +86,11 @@ li {
   background-color: #b4ddb2; /* verde clarito */
   border-left: 5px solid rgba(83, 170, 17, 0.719);
 }
-  
+#taskCounters {
+  margin-bottom: 10px;
+  font-family: sans-serif;
+  font-size: 16px;
+}
+#taskCounters span {
+  margin-right: 10px;
+}
