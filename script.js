@@ -3,6 +3,7 @@ const input = document.getElementById('taskInput');
 const prioritySelect = document.getElementById('prioritySelect');
 const taskList = document.getElementById('taskList');
 const searchInput = document.getElementById('searchInput');
+const filterSelect = document.getElementById('filterPriority');
 
 document.addEventListener('DOMContentLoaded', loadTasks);
 
@@ -76,7 +77,7 @@ function saveTasks() {
   taskList.querySelectorAll('li').forEach(li => {
     const span = li.querySelector('span');
     const priority = li.classList.contains('priority-high') ? 'high' :
-                     li.classList.contains('priority-medium') ? 'medium' : 'low';
+      li.classList.contains('priority-medium') ? 'medium' : 'low';
 
     tasks.push({
       text: span.textContent,
@@ -99,5 +100,19 @@ searchInput.addEventListener('input', () => {
   tasks.forEach(li => {
     const text = li.querySelector('span').textContent.toLowerCase();
     li.style.display = text.includes(filter) ? 'flex' : 'none';
+  });
+});
+
+filterSelect.addEventListener('change', () => {
+  const selected = filterSelect.value;
+  const tasks = taskList.querySelectorAll('li');
+  tasks.forEach(li => {
+    const hasClass = li.classList.contains(`priority-${selected}`);
+    if (selected === 'all' || hasClass) {
+      li.style.display = 'flex';
+    } else {
+      li.style.display = 'none';
+
+    }
   });
 });

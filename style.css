@@ -59,5 +59,31 @@ body {
     margin-bottom: 10px;
     font-size: 1rem;
   }
-  
+  /* Opcional: estilo base */
+li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-bottom: 5px;
+  font-family: sans-serif;
+}
+
+/* Prioridades */
+.priority-high {
+  background-color: #ffe6e6; /* rojo clarito */
+  border-left: 5px solid #ff4d4d;
+}
+
+.priority-medium {
+  background-color: #fff9e6; /* amarillo clarito */
+  border-left: 5px solid #ffc107;
+}
+
+.priority-low {
+  background-color: #b4ddb2; /* verde clarito */
+  border-left: 5px solid rgba(83, 170, 17, 0.719);
+}
   
