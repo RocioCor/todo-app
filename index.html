@@ -10,11 +10,18 @@
 
 <body>
     <h1>📋 Lista de Tareas</h1>
-    <input type="text" id="searchInput" placeholder="Buscar tarea.." />
-    <input type="text" id="taskInput" placeholder="Escribe una tarea..." />
-    <button id="addTaskBtn">Agregar</button>
+    <input type="text" id="taskInput" placeholder="✍️ Escribí una tarea" />
+    <select id="prioritySelect">
+        <option value="low">🟢 Baja</option>
+        <option value="medium">🟡 Media</option>
+        <option value="high">🔴 Alta</option>
+      </select>
+      
+    <button id="addTaskBtn">➕ Agregar</button>
+    <input type="text" id="searchInput" placeholder="🔍 Buscar tarea..." />
 
     <ul id="taskList"></ul>
+
 
     <script src="script.js"></script>
 </body>
