@@ -5,29 +5,54 @@ const taskList = document.getElementById('taskList');
 const searchInput = document.getElementById('searchInput');
 const filterSelect = document.getElementById('filterPriority');
 
-document.addEventListener('DOMContentLoaded', loadTasks);
-
+document.addEventListener('DOMContentLoaded', () => {
+    loadTasks();
+    updateCounters();
+  });
 addBtn.addEventListener('click', () => {
+  const dueDate = document.getElementById('dueDate').value;
   const taskText = input.value.trim();
   const priority = prioritySelect.value;
-
+  
   if (taskText === "") return;
-
-  addTask(taskText, false, priority);
+  const createdAt = new Date();
+  addTask(taskText, false, priority, createdAt, dueDate)
   input.value = "";
   prioritySelect.value = 'low';
   saveTasks();
   updateCounters();
 });
 
-function addTask(text, done = false, priority = 'low') {
+function addTask(text, done = false, priority = 'low', createdAt = new Date(), dueDate = null) {
   const li = document.createElement('li');
+  li.dataset.createdAt = createdAt;
+  li.dataset.dueDate = dueDate;
   if (done) li.classList.add('done');
   li.classList.add(`priority-${priority}`);
 
   const spanText = document.createElement('span');
   spanText.textContent = text;
   li.appendChild(spanText);
+  //mostrar fecha y hora de creacion
+  const dateP = document.createElement('p');
+  const fecha = new Date(createdAt);
+  dateP.textContent = `Creado: ${fecha.toLocaleDateString()}-${fecha.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+  dateP.classList.add('fechaTarea');
+  li.appendChild(dateP);
+
+  //mostrar feca y hora de vencimiento
+  if (dueDate) {
+    const due = new Date(dueDate);
+    const dueP = document.createElement('p');
+    dueP.textContent = `Vence: ${due.toLocaleDateString()} - ${due.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+    dueP.classList.add('fechaVencimiento');
+    //muestra si ya vencio la tarea
+    if (new Date() > due && !done) {
+      dueP.style.color = 'red';
+      dueP.style.fontWeight = 'bold';
+    }
+    li.appendChild(dueP);
+  }
 
   const delBtn = document.createElement('button');
   delBtn.textContent = '❌';
@@ -36,6 +61,7 @@ function addTask(text, done = false, priority = 'low') {
     li.remove();
     saveTasks();
     updateCounters();
+    li.appendChild(delBtn);
   };
 
   li.ondblclick = () => {
@@ -67,6 +93,7 @@ function addTask(text, done = false, priority = 'low') {
     });
   };
 
+  //para marcar realizada la tarea
   li.onclick = () => {
     li.classList.toggle('done');
     saveTasks();
@@ -88,7 +115,9 @@ function saveTasks() {
     tasks.push({
       text: span.textContent,
       done: li.classList.contains('done'),
-      priority: priority
+      priority: priority,
+      createdAt: li.dataset.createdAt,// se guarda como tributo.
+      dueDate: li.dataset.dueDate || null
     });
   });
   localStorage.setItem('tasks', JSON.stringify(tasks));
@@ -96,9 +125,11 @@ function saveTasks() {
 
 function loadTasks() {
   const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-  tasks.forEach(task => addTask(task.text, task.done, task.priority));
-  updateCounters();
+  tasks.forEach(task => {
+    addTask(task.text, task.done, task.priority, task.createdAt, task.dueDate);
+  });
 }
+
 
 searchInput.addEventListener('input', () => {
   const filter = searchInput.value.toLowerCase();

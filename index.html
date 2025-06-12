@@ -1,43 +1,46 @@
 <!DOCTYPE html>
 <html lang="es">
-
+ 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Lista de Tareas</title>
-    <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lista de Tareas</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
-    <div id="taskCounters">
-        <span>Total: <strong id="totalCount">0</strong></span> |
-        <span>Hechas: <strong id="doneCount">0</strong></span> |
-        <span>Pendientes: <strong id="pendingCount">0</strong></span>
-      </div>
-      
-    <h1>📋 Lista de Tareas</h1>
-    <input type="text" id="taskInput" placeholder="✍️ Escribí una tarea" />
-    <select id="prioritySelect">
-        <option value="low">🟢 Baja</option>
-        <option value="medium">🟡 Media</option>
-        <option value="high">🔴 Alta</option>
-      </select>
-      
-    <button id="addTaskBtn">➕ Agregar</button>
-    <label for="filterPriority">Filtrar por prioridad:</label>
-<select id="filterPriority">
-  <option value="all">Todas</option>
-  <option value="high">Alta</option>
-  <option value="medium">Media</option>
-  <option value="low">Baja</option>
-</select>
+  <div id="taskCounters">
+    <span>Total: <strong id="totalCount">0</strong></span> |
+    <span>Hechas: <strong id="doneCount">0</strong></span> |
+    <span>Pendientes: <strong id="pendingCount">0</strong></span>
+  </div>
 
-    <input type="text" id="searchInput" placeholder="🔍 Buscar tarea..." />
+  <h1>📋 Lista de Tareas</h1>
+  <input type="text" id="taskInput" placeholder="✍️ Escribí una tarea" />
+  <label for="dueDate">Fecha y hora límite:</label>
+  <input type="datetime-local" id="dueDate">
 
-    <ul id="taskList"></ul>
+  <select id="prioritySelect">
+    <option value="low">🟢 Baja</option>
+    <option value="medium">🟡 Media</option>
+    <option value="high">🔴 Alta</option>
+  </select>
 
+  <button id="addTaskBtn"> Agregar</button>
+  <label for="filterPriority">Filtrar por prioridad:</label>
+  <select id="filterPriority">
+    <option value="all">Todas</option>
+    <option value="high">Alta</option>
+    <option value="medium">Media</option>
+    <option value="low">Baja</option>
+  </select>
 
-    <script src="script.js"></script>
+  <input type="text" id="searchInput" placeholder="🔍 Buscar tarea..." />
+
+  <ul id="taskList"></ul>
+
+<script src="script.js"></script>
+ 
 </body>
 
 </html>
