@@ -109,25 +109,48 @@ function saveTasks() {
   const tasks = [];
   taskList.querySelectorAll('li').forEach(li => {
     tasks.push({
-    text: li.querySelector('span').textContent,
+      text: li.querySelector('span').textContent,
       done: li.classList.contains('done'),
-        priority: li.classList.contains('priority-high') ? 'high' :
-          li.classList.contains('priority-medium') ? 'medium' : 'low',
-          createdAt: li.dataset.createdAt,
-            dueDate: li.dataset.dueDate || null
-   });
+      priority: li.classList.contains('priority-high') ? 'high' :
+        li.classList.contains('priority-medium') ? 'medium' : 'low',
+      createdAt: li.dataset.createdAt,
+      dueDate: li.dataset.dueDate || null
     });
+  });
   localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
 function loadTasks() {
-  const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-  tasks.forEach(task => {
-    addTask(task.text, task.done, task.priority, task.createdAt, task.dueDate);
-  });
+  try {
+    const savedTasks = localStorage.getItem('tasks');
+    if (!savedTasks) return;
+      const tasks = JSON.parse(savedTasks);
+      if (!Array.isArray(tasks)) throw new Error('formato invalido');
+      taskList.innerHTML = '';
+      tasks.forEach(task => {
+        if (isValidTask(task)) {
+          addTask(
+            task.text,
+            task.done,
+            task.priority || 'low',
+            task.createdAt,
+            task.dueDate,
+          );
+        }
+      });
+      updateCounters();
+  } catch (error){
+    console.error('Error al cargar tareas:', error);
+    alert('Hubo un error al cargar las tareas gurdadas. Verifica la consola');
+  };
 }
-
-
+function isValidTask(task){
+  return(
+    task &&
+    typeof task.text === 'string' &&
+    typeof task.done === 'boolean'
+  );
+}
 searchInput.addEventListener('input', () => {
   const filter = searchInput.value.toLowerCase();
   const tasks = taskList.querySelectorAll('li');
