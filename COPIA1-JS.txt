@@ -6,14 +6,14 @@ const searchInput = document.getElementById('searchInput');
 const filterSelect = document.getElementById('filterPriority');
 
 document.addEventListener('DOMContentLoaded', () => {
-  loadTasks();
-  updateCounters();
-});
+    loadTasks();
+    updateCounters();
+  });
 addBtn.addEventListener('click', () => {
   const dueDate = document.getElementById('dueDate').value;
   const taskText = input.value.trim();
   const priority = prioritySelect.value;
-
+  
   if (taskText === "") return;
   const createdAt = new Date();
   addTask(taskText, false, priority, createdAt, dueDate)
@@ -108,15 +108,18 @@ function addTask(text, done = false, priority = 'low', createdAt = new Date(), d
 function saveTasks() {
   const tasks = [];
   taskList.querySelectorAll('li').forEach(li => {
+    const span = li.querySelector('span');
+    const priority = li.classList.contains('priority-high') ? 'high' :
+      li.classList.contains('priority-medium') ? 'medium' : 'low';
+
     tasks.push({
-    text: li.querySelector('span').textContent,
+      text: span.textContent,
       done: li.classList.contains('done'),
-        priority: li.classList.contains('priority-high') ? 'high' :
-          li.classList.contains('priority-medium') ? 'medium' : 'low',
-          createdAt: li.dataset.createdAt,
-            dueDate: li.dataset.dueDate || null
-   });
+      priority: priority,
+      createdAt: li.dataset.createdAt,// se guarda como tributo.
+      dueDate: li.dataset.dueDate || null
     });
+  });
   localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 

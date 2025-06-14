@@ -10,6 +10,7 @@ Editar tareas
 Filtro por tareas completadas / pendientes
 ------------------------------
  Próximas mejoras
+ -Dividido por usuarios
 - recordatorios al mail de tarea pendiente
 - Adaptación a móviles
 -----------------------------

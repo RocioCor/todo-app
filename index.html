@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
- 
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -14,33 +14,44 @@
     <span>Hechas: <strong id="doneCount">0</strong></span> |
     <span>Pendientes: <strong id="pendingCount">0</strong></span>
   </div>
+  <section>
+    <div>
+      <h1>📋 Lista de Tareas</h1>
+      <div class="CreateTask">
+        <input type="text" id="taskInput" placeholder="✍️ Escribí una tarea" />
+        <select id="prioritySelect">
+          <option value="low">🟢 Baja</option>
+          <option value="medium">🟡 Media</option>
+          <option value="high">🔴 Alta</option>
+        </select>
+      </div>
 
-  <h1>📋 Lista de Tareas</h1>
-  <input type="text" id="taskInput" placeholder="✍️ Escribí una tarea" />
-  <label for="dueDate">Fecha y hora límite:</label>
-  <input type="datetime-local" id="dueDate">
+      <div><label for="dueDate">Fecha y hora límite:</label>
+        <input type="datetime-local" id="dueDate">
+      </div>
 
-  <select id="prioritySelect">
-    <option value="low">🟢 Baja</option>
-    <option value="medium">🟡 Media</option>
-    <option value="high">🔴 Alta</option>
-  </select>
+    </div>
+    <button id="addTaskBtn"> Agregar</button>
+  </section>
+  <section>
+    <div class="filtroTareas">
+      <label for="filterPriority">Filtrar por prioridad:</label>
 
-  <button id="addTaskBtn"> Agregar</button>
-  <label for="filterPriority">Filtrar por prioridad:</label>
-  <select id="filterPriority">
-    <option value="all">Todas</option>
-    <option value="high">Alta</option>
-    <option value="medium">Media</option>
-    <option value="low">Baja</option>
-  </select>
+      <select id="filterPriority">
+        <option value="all">Todas</option>
+        <option value="high">Alta</option>
+        <option value="medium">Media</option>
+        <option value="low">Baja</option>
 
-  <input type="text" id="searchInput" placeholder="🔍 Buscar tarea..." />
+        <input type="text" id="searchInput" placeholder="🔍 Buscar tarea..." />
+    </div>
+    <div>
+      <ul id="taskList"></ul>
+    </div>
+  </section>
 
-  <ul id="taskList"></ul>
+  <script src="script.js"></script>
 
-<script src="script.js"></script>
- 
 </body>
 
 </html>

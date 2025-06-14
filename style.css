@@ -94,3 +94,12 @@ li {
 #taskCounters span {
   margin-right: 10px;
 }
+/*filtro de busqueda*/
+.filtroTareas {
+margin-top: 5%;
+font-size: 20px;
+}
+/*cracion de tarea*/
+.CreateTask{
+  margin-left: 30%;
+}
